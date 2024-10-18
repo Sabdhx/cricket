@@ -1,6 +1,7 @@
 import Admin from '../models/Admin.js';
 import blogPosts from "../models/Blogs.js";
 import posts from "../models/posts.js";
+import User from '../models/User.js';
 export const getAdminDashboard = async (req, res) => {
   try {
     const adminData = await Admin.findOne({ userId: req.user.id });
@@ -30,8 +31,11 @@ export const blogsByAdmin = async (req, res) => {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
-
-
+ 
+export const allBlogs=async(req,res)=>{
+  const response = await blogPosts.find();
+  res.status(200).json(response)
+}
 // Add admin functionalities (e.g., delete player posts, create blog posts) here as needed
 
 // Function to delete a player post
@@ -91,3 +95,8 @@ export const deleteBlogsByAdmin = async (req, res) => {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
+
+export const allAdmins=async(req,res)=>{
+  const response = await User.find();
+  res.status(200).json(response)
+}

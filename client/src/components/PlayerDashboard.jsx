@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { PlayerPostsContext } from "../context/PlayerPostsContext"; // Import the context
 
 const PlayerDashboard = () => {
-  const { addPost } = useContext(PlayerPostsContext); // Access the addPost function from the context
+  const  addPost  = [] // Access the addPost function from the context
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { PlayerPostsContext } from '../context/PlayerPostsContext';
 
 const SinglePlayerPostPage = () => {
   const { id } = useParams();
-  const { playerPosts } = useContext(PlayerPostsContext);
+  const  playerPosts  =[];
   const navigate = useNavigate();
 
   const post = playerPosts.find((post) => post._id === id);

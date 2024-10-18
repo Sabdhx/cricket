@@ -78,15 +78,16 @@ export const login = async (req, res, next) => {
       );
 
       res.cookie("token", token, {
-          sameSite: "None",
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          httpOnly: true,  // Secure cookie
+          maxAge: 24 * 60 * 60 * 1000,  // 1 day
+          secure: false,  // Set to true in production for HTTPS
+          sameSite: 'Lax', // Adjust as needed
       });
 
       // Handle different roles
       switch (user.role) {
           case "admin":
-              const existingAdmin = await Admin.findOne({ _id: user._id });
+              const existingAdmin = await User.findOne({ _id: user._id });
               if (!existingAdmin) {
                   await Admin.create(user);
               }
@@ -94,7 +95,7 @@ export const login = async (req, res, next) => {
               
           case "player":
               try {
-                  const playerData = await Player.findOne({ _id: user._id });
+                  const playerData = await User.findOne({ _id: user._id });
                   if (!playerData) {
                       await Player.create({ _id: user._id });
                   }
@@ -105,7 +106,7 @@ export const login = async (req, res, next) => {
               
           case "hiringManager":
               try {
-                  const hiringData = await HiringManager.findOne({ _id: user._id });
+                  const hiringData = await User.findOne({ _id: user._id });
                   if (!hiringData) {
                       await HiringManager.create({ _id: user._id });
                   }
@@ -129,10 +130,7 @@ export const players = async (req,res)=>{
   res.status(200).json(response)
 }
 
-export const adminFind = async (req,res)=>{
-  const response = await Admin.find();
-  res.status(200).json(response)
-}
+
 
 export const deleteAdmin = async (req, res) => {
   const id = req.params.id;

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlayerPostsContext } from '../context/PlayerPostsContext.jsx';
 
 const PlayerPostsPage = () => {
-  const { playerPosts } = useContext(PlayerPostsContext);
+  const  [playerPosts , setPlayerPosts]  = useState([])
   const navigate = useNavigate();
 
   return (

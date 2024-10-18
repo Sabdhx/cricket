@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,8 +9,13 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add login logic here, then navigate to the appropriate dashboard
-    navigate('/player-dashboard'); // Change this based on user role
+    e.preventDefault();
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      { email, password },
+      { withCredentials: true } // Add this to include cookies
+    );    console.log(response)
+    // navigate('/player-dashboard');
   };
 
   return (

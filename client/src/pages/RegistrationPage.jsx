@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from "axios"
 const RegistrationPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -10,8 +10,9 @@ const RegistrationPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Navigate to the appropriate dashboard based on the selected role
-    navigate(role === 'player' ? '/player-dashboard' : '/hiring-manager-dashboard');
+    const response = await axios.post("http://localhost:5000/api/auth/signup",{username , email, password , role});
+    console.log(response)
+    // navigate(role === 'player' ? '/player-dashboard' : '/hiring-manager-dashboard');
   };
 
   return (

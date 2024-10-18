@@ -9,20 +9,18 @@ import LoginPage from "./pages/LoginPage";
 import AdminDashboard from "./components/AdminDashboard";
 import PlayerDashboard from "./components/PlayerDashboard";
 import HiringManagerDashboard from "./components/HiringManagerDashboard";
-import PlayerPostsPage from "./pages/PlayerPostsPage";
 import SinglePlayerPostPage from "./components/SinglePlayerPostPage";
-import { PlayerPostsProvider } from "./context/PlayerPostsContext.jsx";
+import PlayerPostsPage from "./pages/PlayerPostsPage";
 
 
 const App = () => {
-  const [playerPosts, setPlayerPosts] = useState([]);
 
   const handleTalentPost = (post) => {
-    setPlayerPosts((prevPosts) => [...prevPosts, post]);
+  
   };
 
   return (
-    <PlayerPostsProvider>
+  
     <Router>
       <div className="flex flex-col min-h-screen">
         <Header />
@@ -42,7 +40,7 @@ const App = () => {
         <Footer />
       </div>
     </Router>
-    </PlayerPostsProvider>
+ 
 
   );
 };

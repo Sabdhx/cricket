@@ -5,11 +5,16 @@ const playerSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+ 
     },
-    name: {
+    username: {
       type: String,
-      required: true,
+    },
+    email:{
+      type:String
+    },
+    role:{
+      type:String
     },
     age: {
       type: Number,
@@ -23,8 +28,11 @@ const playerSchema = new mongoose.Schema({
       type: String,
       
     },
-    media: {
+    status: {
+      type: String,
+      enum: ["hire", "hired"]
     },
+    
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,

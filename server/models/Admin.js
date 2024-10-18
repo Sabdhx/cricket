@@ -2,11 +2,15 @@
 import mongoose from "mongoose";
 const adminSchema = new mongoose.Schema({
   username:{
-    type: String     
+    type: String,
+    required: true, // Ensure username is provided
+    unique: true     
      
   },
   email:{
-    type: String   
+    type: String ,
+    required: true, // Ensure username is provided
+    unique: true   
      
   },
   });

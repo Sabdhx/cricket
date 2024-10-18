@@ -1,13 +1,12 @@
 import express from 'express';
-import { getHiredPlayers } from '../controllers/hiringController.js';
-import protect from '../middlewares/authMiddleware.js';
-import roleMiddleware from '../middlewares/roleMiddleware.js';
+import HiringManagerVerifier from '../middlewares/hiringManagerVerfier.js';
+import { hiringPlayer, hiringPlayerFind } from '../controllers/hiringManagerController.js';
 
 const router = express.Router();
 
-router.use(protect);
-router.use(roleMiddleware('hiringManager'));
 
-router.get('/hired', getHiredPlayers);
+router.get('/hiring',HiringManagerVerifier,hiringPlayer );
+router.get("/hiringPlayer/:id",HiringManagerVerifier,hiringPlayerFind)
+
 
 export default router;

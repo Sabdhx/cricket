@@ -1,9 +1,13 @@
+import playerFind from '../middlewares/authMiddleware.js';
+import Admin from '../models/Admin.js';
+import HiringManager from '../models/HiringManager.js';
 import Player from '../models/Player.js';
 import posting  from "../models/posts.js"
-
+import User from "../models/User.js"
 export const getPlayerDashboard = async (req, res) => {
+
   try {
-    const playerData = await Player.findOne({ userId: req.user.id });
+    const playerData = await Player.findById(req.userId);
     if (!playerData) return res.status(404).json({ error: 'Player not found' });
     res.json(playerData);
   } catch (error) {
@@ -13,14 +17,29 @@ export const getPlayerDashboard = async (req, res) => {
 
 
 export const postUploadByPlayer = async (req, res) => {
+  const userId = req.userId
+  console.log(userId)
   try {
-    const { media, height, Weight, address, whatsAppNumber, age, skills, mediaUrl } = req.body;
+    const { userId,media, height, Weight, address, whatsAppNumber, age, skills, mediaUrl } = req.body;
 
-    // Create a new entry in the database
-    const response = await posting.create(req.body);
+    // Create a new post entry
+    const newPost = await posting.create({userId, media, height, Weight, address, whatsAppNumber, age, skills, mediaUrl });
 
-    // Respond with the created entry
-    res.status(200).json(response);
+    // Find the player
+    const findingPlayer = await Player.findById(req.userId);
+
+    if (!findingPlayer) {
+      return res.status(404).json({ message: "Player not found" });
+    }
+
+    // Push the post ID to the player's posts array
+    findingPlayer.posts.push(newPost._id);
+
+    // Save the player document
+    await findingPlayer.save();
+
+    // Respond with the updated player
+    res.status(200).json(findingPlayer);
   } catch (error) {
     // Handle errors
     console.error("Error uploading data:", error);
@@ -59,3 +78,20 @@ export const deletePostsByPlayer = async (req, res) => {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
+
+
+export const allPlayers=async(req,res)=>{
+
+
+  const response = await Player.find();
+  res.status(200).json(response)
+}
+
+
+export const singlePost=async(req,res)=>{
+
+
+  const response = await posting.findById(req.params.id);
+  console.log(response)
+  res.status(200).json(response)
+}

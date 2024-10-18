@@ -10,6 +10,9 @@ import AdminDashboard from "./components/AdminDashboard";
 import PlayerDashboard from "./components/PlayerDashboard";
 import HiringManagerDashboard from "./components/HiringManagerDashboard";
 import PlayerPostsPage from "./pages/PlayerPostsPage";
+import SinglePlayerPostPage from "./components/SinglePlayerPostPage";
+import { PlayerPostsProvider } from "./context/PlayerPostsContext.jsx";
+
 
 const App = () => {
   const [playerPosts, setPlayerPosts] = useState([]);
@@ -19,6 +22,7 @@ const App = () => {
   };
 
   return (
+    <PlayerPostsProvider>
     <Router>
       <div className="flex flex-col min-h-screen">
         <Header />
@@ -31,12 +35,15 @@ const App = () => {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/player-dashboard" element={<PlayerDashboard onTalentPost={handleTalentPost} />} />
             <Route path="/hiring-manager-dashboard" element={<HiringManagerDashboard />} />
-            <Route path="/player-posts" element={<PlayerPostsPage playerPosts={playerPosts} />} />
+            <Route path="/player-posts" element={<PlayerPostsPage />} />
+            <Route path="/player-post/:id" element={<SinglePlayerPostPage />} />
           </Routes>
         </main>
         <Footer />
       </div>
     </Router>
+    </PlayerPostsProvider>
+
   );
 };
 
